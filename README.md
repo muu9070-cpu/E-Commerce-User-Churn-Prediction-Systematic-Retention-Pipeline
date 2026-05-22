@@ -54,6 +54,34 @@ SELECT
 FROM base_features
 WHERE pv_count_8d > 0 OR cart_count_8d > 0;
 
+
+## 🛠️ 3. Systematic Data Engineering Pipeline
+The framework ingests high-velocity user interaction logs and processes them through an optimized sliding-window architecture:
+
+```mermaid
+graph TD
+    %% Node Definitions with Inline Styling for Maximum Readability
+    style A fill:#f9f9f9,stroke:#333,stroke-width:2px;
+    style B fill:#e1f5fe,stroke:#0288d1,stroke-width:2px;
+    style C fill:#e8f5e9,stroke:#388e3c,stroke-width:2px;
+    style D fill:#fff3e0,stroke:#f57c00,stroke-width:2px;
+    style E fill:#fff3e0,stroke:#f57c00,stroke-width:2px;
+    style F fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px;
+
+    A([Raw User Interaction Logs])
+    B[MySQL Sliding-Window ETL<br>Feature Matrix Extraction: Recency, Frequency, Intention]
+    C[Random Forest Model<br>Predicts Individual Churn Probabilities P_churn]
+    D[A/B Testing Simulator<br>Statsig T-test Verification]
+    E[Tiered Voucher Matrix<br>Operation Action Triggering]
+    F[Power BI Executive Dashboard<br>Cohort Heatmap, Segmentation, Executive KPIs]
+
+    %% Pipeline Directed Edges
+    A --> B
+    B --> C
+    C --> D
+    C --> E
+    D --> F
+    E --> F
 ---
 
 ## 📊 3. White-Box Modeling & Asymmetric Cost Optimization
@@ -66,8 +94,6 @@ The analytical framework implements a robust **Random Forest Classifier** optimi
   * **Empirical Results**: The system successfully achieved an outstanding **Recall rate of 94.4%** (68 out of 72 true risk vectors accurately detected), capturing critical platform assets before final detachment.
 * **Feature Attribution & Information Gain**:
   * Behavioral analysis explicitly identifies `cart_count_8d` as the dominant predictor (Information Gain > 32%). This indicates that strong consideration signals (carting actions) combined with immediate drop-offs provide the most definitive churn signals, far outperforming passive viewing (`pv_count_8d`) or historical purchases (`buy_count_8d`).
-
----
 
 ---
 
