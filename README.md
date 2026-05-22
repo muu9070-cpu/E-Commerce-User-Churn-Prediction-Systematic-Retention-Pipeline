@@ -91,9 +91,7 @@ $$\Delta\text{GMV} = N_{\text{target}} \times \text{Recall} \times \Delta\text{C
 * **Strategy Execution**: Implementing the high-incentive tiered playbook achieves a modest $10\%$ reactivation conversion rate among targeted users ($944$ successfully retained customers).
 * **Net Revenue Contribution**: With an Average Order Value (AOV / ALV) of $150$ RMB, the architecture directly protects and generates **$141,600$ RMB in incremental gross revenue**.
 * **Net Economic Benefit**: Subtracting voucher redemption costs ($\approx 20,000$ RMB), the framework yields a **Net Economic Benefit of $121,600$ RMB, delivering an enterprise ROI of 6.08x**.
-
----
-
+  
 ---
 
 ## 🧪 5. Integrated Cohort Analysis & A/B Growth Experimentation
@@ -148,6 +146,7 @@ The repository delivers both interactive enterprise `.pbix` source files and emb
   <img src="./assets/Funnel_Optimization.png" width="95%" alt="PV-Cart-Buy Convergent Funnel" style="border: 1px solid #cbd5e1; border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-bottom: 15px;" />
   <p><i>Figure 4: Conversion Funnel Optimization - Classic 3-stage monotonically decreasing funnel validating the targeted high-risk voucher intervention strategy.</i></p>
 </div>
+
 ---
 
 ## 📂 7. Repository Layout
