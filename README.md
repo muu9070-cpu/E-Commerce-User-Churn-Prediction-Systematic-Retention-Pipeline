@@ -24,7 +24,7 @@ An enterprise-grade Data Analytics & Growth Engineering project engineered to tr
 * **Data Scale & Label Distribution**: The script successfully extracted **654** total active profiles, capturing a robustly balanced distribution of **357** high-risk churn instances, completely eliminating the hazard of zero-variance model convergence.
 
 ### 🗄️ Feature Extraction Pipeline (`user_churn_etl.sql`)
-
+```sql
 USE taobao_analysis;
 
 CREATE TABLE user_churn_features AS
@@ -57,6 +57,7 @@ SELECT
 FROM base_features
 WHERE pv_count_8d > 0 OR cart_count_8d > 0;
 
+````
 ---
 
 ## 📊 3. White-Box Modeling & Asymmetric Cost Optimization
