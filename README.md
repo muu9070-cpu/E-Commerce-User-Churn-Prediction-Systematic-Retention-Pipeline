@@ -16,12 +16,15 @@ An enterprise-grade Data Analytics & Growth Engineering project engineered to tr
   * **Derived Micro-Conversion Feature (X6)**: `pv_to_buy_ratio` — The systemic transition rate from broad impression viewing to deterministic acquisition, tracking user purchasing friction.
   
 ---
+---
 
 ## 🛠️ 2. Production SQL ETL & Sliding-Window Engineering
 
 * **Data Governance & Imbalance Mitigation**: Financial and transaction log data natively suffer from temporal overlap and extreme data imbalance if the observation window is improperly calibrated. An elegant SQL pipeline was designed to structure raw user streams into an analytical feature wide table using Common Table Expressions (CTEs) and UNIX timestamp boundaries. 
 * **Data Scale & Label Distribution**: The script successfully extracted **654** total active profiles, capturing a robustly balanced distribution of **357** high-risk churn instances, completely eliminating the hazard of zero-variance model convergence.
-* **Feature Extraction Pipeline (`user_churn_etl.sql`)**:
+
+### 🗄️ Feature Extraction Pipeline (`user_churn_etl.sql`)
+
 USE taobao_analysis;
 
 CREATE TABLE user_churn_features AS
