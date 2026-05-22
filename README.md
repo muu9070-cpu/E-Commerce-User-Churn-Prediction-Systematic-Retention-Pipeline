@@ -1,3 +1,4 @@
+
 # E-Commerce User Churn Prediction & Systematic Retention Pipeline
 
 An enterprise-grade Data Analytics & Growth Engineering project engineered to transition retrospective descriptive analysis into a forward-looking proactive user retention pipeline. This repository delivers an end-to-end analytical framework covering production-level **MySQL sliding-window feature engineering**, white-box **Random Forest churn prediction**, **A/B testing (t-test) analysis**, and an executive **Power BI Retention Dashboard Framework**.
@@ -13,15 +14,14 @@ An enterprise-grade Data Analytics & Growth Engineering project engineered to tr
   * **Recency Feature (X1)**: `recency_hours` — The exact duration (in hours) elapsed between the user's final platform interaction and the cutoff boundary of the feature generation window. This serves as the primary velocity indicator of user disengagement.
   * **Frequency Features (X2 - X5)**: `pv_count_8d`, `fav_count_8d`, `cart_count_8d`, `buy_count_8d` — Absolute aggregated behavior volumes over an 8-day rolling sliding window, measuring absolute affinity.
   * **Derived Micro-Conversion Feature (X6)**: `pv_to_buy_ratio` — The systemic transition rate from broad impression viewing to deterministic acquisition, tracking user purchasing friction.
-
+  
 ---
 
 ## 🛠️ 2. Production SQL ETL & Sliding-Window Engineering
 
 * **Data Governance & Imbalance Mitigation**: Financial and transaction log data natively suffer from temporal overlap and extreme data imbalance if the observation window is improperly calibrated. An elegant SQL pipeline was designed to structure raw user streams into an analytical feature wide table using Common Table Expressions (CTEs) and UNIX timestamp boundaries. 
 * **Data Scale & Label Distribution**: The script successfully extracted **654** total active profiles, capturing a robustly balanced distribution of **357** high-risk churn instances, completely eliminating the hazard of zero-variance model convergence.
-* **Feature Extraction Pipeline (`user_churn_etl.sql`)**:
-
+* **Feature Extraction Pipeline (`user_churn_etl.sql`)**:```sql
 USE taobao_analysis;
 
 CREATE TABLE user_churn_features AS
