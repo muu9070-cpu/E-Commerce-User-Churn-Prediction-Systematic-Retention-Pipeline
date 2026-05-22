@@ -124,28 +124,13 @@ The repository delivers both interactive enterprise `.pbix` source files and emb
 * 📊 **Funnel Optimization Source**: [`dashboards/Funnel_Optimization.pbix`](dashboards/Funnel_Optimization.pbix)
 
 ### 🎨 System Visual Showcase
+Figure 1: Executive Overview (Page 1) - Centralized KPI monitoring for macroscopic transactional velocity and conversion-funnel leakage points.
 
-<div align="center">
-  <img src="assets/Page1_Executive_Overview.png" width="95%" alt="Page 1: Executive Overview" style="border: 1px solid #cbd5e1; border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-bottom: 30px;" />
-  <p><i>Figure 1: Executive Overview (Page 1) - Centralized KPI monitoring for macroscopic transactional velocity and conversion-funnel leakage points.</i></p>
-</div>
+Figure 2: User Cohort Retention Heatmap (Page 3) - Standard matrix locking Week 0 baseline at 100%, isolating portfolio decay.
 
-<div align="center">
-  <img src="assets/Page3_Retention_Heatmap.png" width="95%" alt="Page 3: Retention Heatmap Matrix" style="border: 1px solid #cbd5e1; border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-bottom: 30px;" />
-  <p><i>Figure 2: User Cohort Retention Heatmap (Page 3) - Standard matrix locking Week 0 baseline at 100%, with conditional formatting (Deep Blue to White) isolating portfolio decay (23.44% initial drop-off).</i></p>
-</div>
+Figure 3: User Segmentation & Risk Alert (Page 2) - Precision risk stratification classifying users based on ML probability scores.
 
-<div align="center">
-  <img src="assets/Page2_User_Segmentation.png" width="95%" alt="Page 2: User Risk Alert View" style="border: 1px solid #cbd5e1; border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-bottom: 30px;" />
-  <p><i>Figure 3: User Segmentation & Risk Alert (Page 2) - Precision risk stratification classifying High Risk (357 users), Mid Risk (13 users), and Loyal Cohorts (284 users) based on ML probability scores.</i></p>
-</div>
-
-<div align="center">
-  <img src="assets/Page4_Funnel_Optimization.png" width="95%" alt="Page 4: PV-Cart-Buy Convergent Funnel" style="border: 1px solid #cbd5e1; border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-bottom: 30px;" />
-  <p><i>Figure 4: Conversion Funnel Optimization (Page 4) - Classic 3-stage monotonically decreasing funnel (653-463-422), validating the 91.1% Cart-to-Buy conversion rate and targeted high-risk voucher intervention strategy.</i></p>
-</div>
-
----
+Figure 4: Conversion Funnel Optimization (Page 4) - Classic 3-stage monotonically decreasing funnel validating high-risk voucher intervention strategy.
 
 ---
 
