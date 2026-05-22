@@ -56,98 +56,101 @@ FROM base_features
 WHERE pv_count_8d > 0 OR cart_count_8d > 0;
 
 ---
----
+📊 3. White-Box Modeling & Asymmetric Cost Optimization
+The analytical framework implements a robust Random Forest Classifier optimized for business-cost utility rather than raw accuracy.
 
-## 📊 3. White-Box Modeling & Asymmetric Cost Optimization
+📁 Core Modeling Framework: Churn_Prediction_Framework.ipynb
 
-The analytical framework implements a robust **Random Forest Classifier** optimized for business-cost utility rather than raw accuracy.
+Model Evaluation Metrics & Outcomes:
 
-* 📁 **Core Modeling Framework**: [`Churn_Prediction_Framework.ipynb`](Churn_Prediction_Framework.ipynb)
-* **Model Evaluation Metrics & Outcomes**:
-  * **Asymmetric Risk Strategy**: To align with business realities where a False Negative (leaking an executive active user) costs 10x more than a False Positive (distributing an unnecessary micro-voucher), the classification threshold was tuned down to **0.40**.
-  * **Empirical Results**: The system successfully achieved an outstanding **Recall rate of 94.4%** (68 out of 72 true risk vectors accurately detected), capturing critical platform assets before final detachment.
-* **Feature Attribution & Information Gain**:
-  * Behavioral analysis explicitly identifies `cart_count_8d` as the dominant predictor (Information Gain > 32%). This indicates that strong consideration signals (carting actions) combined with immediate drop-offs provide the most definitive churn signals, far outperforming passive viewing (`pv_count_8d`) or historical purchases (`buy_count_8d`).
+Asymmetric Risk Strategy: To align with business realities where a False Negative (leaking an executive active user) costs 10x more than a False Positive (distributing an unnecessary micro-voucher), the classification threshold was tuned down to 0.40.
 
----
+Empirical Results: The system successfully achieved an outstanding Recall rate of 94.4% (68 out of 72 true risk vectors accurately detected), capturing critical platform assets before final detachment.
 
-## 🚀 4. Actionable Multi-Tier Retention Matrix & GMV Quantifiable Lift
+Feature Attribution & Information Gain:
 
+Behavioral analysis explicitly identifies cart_count_8d as the dominant predictor (Information Gain > 32%). This indicates that strong consideration signals (carting actions) combined with immediate drop-offs provide the most definitive churn signals, far outperforming passive viewing (pv_count_8d) or historical purchases (buy_count_8d).
+
+🚀 4. Actionable Multi-Tier Retention Matrix & GMV Quantifiable Lift
 The machine learning predictions directly feed into an automated, cross-functional marketing and product operation matrix:
 
-### 💡 Segmented Strategy Lifecycle Matrix
-By plotting predicted Churn Probability ($P_{\text{churn}}$) against historical user monetization weight ($M_{\text{volume}}$), the platform triggers targeted webhook events:
+💡 Segmented Strategy Lifecycle Matrix
+By plotting predicted Churn Probability (P 
+churn
+​
+ ) against historical user monetization weight (M 
+volume
+​
+ ), the platform triggers targeted webhook events:
 
-| Strategic Segment | Churn Risk Threshold | Historical Value Tier | Operational Playbook (Actionable Advice) |
-| :--- | :--- | :--- | :--- |
-| **High-Value / High-Risk** | $P_{\text{churn}} \ge 80\%$ | Top 20% GMV Contributors | **Immediate High-Priority Interception**: Trigger push notifications and SMS vectors delivering high-incentive, site-wide premium no-threshold vouchers to shock-activate reactivation. |
-| **Mid-Value / High-Risk** | $P_{\text{churn}} \ge 75\%$ | Middle 50% Core Cohort | **Cross-Category Reactivation**: Dynamically inject recommended item modules based on historical category affinity paired with category-specific coupons to stimulate conversion. |
-| **Low-Value / High-Risk** | $P_{\text{churn}} \ge 70\%$ | Bottom 30% Low Spenders | **Low-Cost Gamification Engagement**: Route users into low-cost loyalty programs, daily check-in mechanics, or push community content to recover attention without eroding margin. |
-
-### 📈 Quantifiable GMV Impact Simulation Model
+Strategic Segment	Churn Risk Threshold	Historical Value Tier	Operational Playbook (Actionable Advice)
+High-Value / High-Risk	P 
+churn
+​
+ ≥80%	Top 20% GMV Contributors	Immediate High-Priority Interception: Trigger push notifications and SMS vectors delivering high-incentive, site-wide premium no-threshold vouchers to shock-activate reactivation.
+Mid-Value / High-Risk	P 
+churn
+​
+ ≥75%	Middle 50% Core Cohort	Cross-Category Reactivation: Dynamically inject recommended item modules based on historical category affinity paired with category-specific coupons to stimulate conversion.
+Low-Value / High-Risk	P 
+churn
+​
+ ≥70%	Bottom 30% Low Spenders	Low-Cost Gamification Engagement: Route users into low-cost loyalty programs, daily check-in mechanics, or push community content to recover attention without eroding margin.
+📈 Quantifiable GMV Impact Simulation Model
 To justify the economic viability of the data science architecture, the performance is mapped to an algorithmic revenue growth function:
 
-$$\Delta\text{GMV} = N_{\text{target}} \times \text{Recall} \times \Delta\text{Conversion} \times \text{ALV} - \text{Cost}_{\text{vouchers}}$$
+ΔGMV=N 
+target
+​
+ ×Recall×ΔConversion×ALV−Cost 
+vouchers
+​
+ 
+Production Proof of Concept: Assuming a cohort of 10,000 high-risk accounts are processed, a model Recall of 94.4% accurately isolates 9,440 valid churn vectors.
 
-* **Production Proof of Concept**: Assuming a cohort of $10,000$ high-risk accounts are processed, a model Recall of $94.4\%$ accurately isolates $9,440$ valid churn vectors.
-* **Strategy Execution**: Implementing the high-incentive tiered playbook achieves a modest $10\%$ reactivation conversion rate among targeted users ($944$ successfully retained customers).
-* **Net Revenue Contribution**: With an Average Order Value (AOV / ALV) of $150$ RMB, the architecture directly protects and generates **$141,600$ RMB in incremental gross revenue**.
-* **Net Economic Benefit**: Subtracting voucher redemption costs ($\approx 20,000$ RMB), the framework yields a **Net Economic Benefit of $121,600$ RMB, delivering an enterprise ROI of 6.08x**.
+Strategy Execution: Implementing the high-incentive tiered playbook achieves a modest 10% reactivation conversion rate among targeted users (944 successfully retained customers).
 
----
+Net Revenue Contribution: With an Average Order Value (AOV / ALV) of 150 RMB, the architecture directly protects and generates 141,600 RMB in incremental gross revenue.
 
-## 🧪 5. Integrated Cohort Analysis & A/B Growth Experimentation
+Net Economic Benefit: Subtracting voucher redemption costs (≈20,000 RMB), the framework yields a Net Economic Benefit of 121,600 RMB, delivering an enterprise ROI of 6.08x.
 
+🧪 5. Integrated Cohort Analysis & A/B Growth Experimentation
 To evaluate product baseline health and statistically validate the revenue-generating potential of our machine-learning intervention, a rigorous validation pipeline was executed.
 
-* 📁 **Analytics & Testing Engine**: [`retention_ab_test_analyzer.ipynb`](retention_ab_test_analyzer.ipynb)
-* **Empirical Cohort Performance**:
-  * **Control Group A (No Voucher)**: Baseline 7-Day user retention settled at **21.50%**.
-  * **Treatment Group B (Segmented Voucher Intervention)**: Post-intervention 7-Day user retention surged to **28.80%**, representing a substantial **$+7.3\%$** lift in user portfolio health.
-* **Statistical Rigor**: A Two-Sample Independent T-Test was executed across the experimentation matrices to confirm that the observed lift was not driven by random sampling variance:
-  * **T-Statistic**: `-3.7737`
-  * **P-Value**: `1.6553e-04` ($\alpha < 0.01$)
-  * **Conclusion**: Successfully rejected the Null Hypothesis ($H_0$), verifying that the targeted growth intervention mechanisms provide a statistically significant, scalable lift to platform user retention velocity.
+📁 Analytics & Testing Engine: retention_ab_test_analyzer.ipynb
 
----
+Empirical Cohort Performance:
 
-## 📈 6. Executive Power BI Dashboards
+Control Group A (No Voucher): Baseline 7-Day user retention settled at 21.50%.
 
-The repository delivers both interactive enterprise `.pbix` source files and embedded visual showcases. To examine the dynamic relationships, download the source assets via the links below.
+Treatment Group B (Segmented Voucher Intervention): Post-intervention 7-Day user retention surged to 28.80%, representing a substantial +7.3% lift in user portfolio health.
 
-### 📂 Dashboard Source Artifacts
-* 📊 **Executive Overview Source**: [`dashboards/Executive_Overview.pbix`](dashboards/Executive_Overview.pbix)
-* 📊 **User Segmentation Source**: [`dashboards/User_Segmentation.pbix`](dashboards/User_Segmentation.pbix)
-* 📊 **Retention Heatmap Source**: [`dashboards/Retention_Heatmap.pbix`](dashboards/Retention_Heatmap.pbix)
-* 📊 **Funnel Optimization Source**: [`dashboards/Funnel_Optimization.pbix`](dashboards/Funnel_Optimization.pbix)
+Statistical Rigor: A Two-Sample Independent T-Test was executed across the experimentation matrices to confirm that the observed lift was not driven by random sampling variance:
 
-### 🎨 System Visual Showcase
+T-Statistic: -3.7737
 
-<div align="center">
-  <img src="assets/Page1_Executive_Overview.png" width="95%" alt="Page 1: Executive Overview" style="border: 1px solid #cbd5e1; border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-bottom: 30px;" />
-  <p><i>Figure 1: Executive Overview (Page 1) - Centralized KPI monitoring for macroscopic transactional velocity and conversion-funnel leakage points.</i></p>
-</div>
+P-Value: 1.6553e-04 (α<0.01)
 
-<div align="center">
-  <img src="assets/Page3_Retention_Heatmap.png" width="95%" alt="Page 3: Retention Heatmap Matrix" style="border: 1px solid #cbd5e1; border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-bottom: 30px;" />
-  <p><i>Figure 2: User Cohort Retention Heatmap (Page 3) - Standard matrix locking Week 0 baseline at 100%, with conditional formatting (Deep Blue to White) isolating portfolio decay (23.44% initial drop-off).</i></p>
-</div>
+Conclusion: Successfully rejected the Null Hypothesis (H 
+0
+​
+ ), verifying that the targeted growth intervention mechanisms provide a statistically significant, scalable lift to platform user retention velocity.
 
-<div align="center">
-  <img src="assets/Page2_User_Segmentation.png" width="95%" alt="Page 2: User Risk Alert View" style="border: 1px solid #cbd5e1; border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-bottom: 30px;" />
-  <p><i>Figure 3: User Segmentation & Risk Alert (Page 2) - Precision risk stratification classifying High Risk (357 users), Mid Risk (13 users), and Loyal Cohorts (284 users) based on ML probability scores.</i></p>
-</div>
+📈 6. Executive Power BI Dashboards
+The repository delivers both interactive enterprise .pbix source files and embedded visual showcases. To examine the dynamic relationships, download the source assets via the links below.
 
-<div align="center">
-  <img src="assets/Page4_Funnel_Optimization.png" width="95%" alt="Page 4: PV-Cart-Buy Convergent Funnel" style="border: 1px solid #cbd5e1; border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-bottom: 30px;" />
-  <p><i>Figure 4: Conversion Funnel Optimization (Page 4) - Classic 3-stage monotonically decreasing funnel (653-463-422), validating the 91.1% Cart-to-Buy conversion rate and targeted high-risk voucher intervention strategy.</i></p>
-</div>
+📂 Dashboard Source Artifacts
+📊 Executive Overview Source: dashboards/Executive_Overview.pbix
 
----
+📊 User Segmentation Source: dashboards/User_Segmentation.pbix
 
-## 📂 7. Repository Layout
+📊 Retention Heatmap Source: dashboards/Retention_Heatmap.pbix
 
-```text
+📊 Funnel Optimization Source: dashboards/Funnel_Optimization.pbix
+
+🎨 System Visual Showcase
+📂 7. Repository Layout
+Plaintext
 ├── README.md                           # Master Project Documentation & Business Spec
 ├── user_churn_etl.sql                  # Production SQL Feature Engineering Pipeline
 ├── Churn_Prediction_Framework.ipynb    # Random Forest Classifier Training & Evaluation
