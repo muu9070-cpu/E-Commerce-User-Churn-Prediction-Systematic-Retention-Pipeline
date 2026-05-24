@@ -10,10 +10,10 @@ This project focuses on predicting potential user churn in an e-commerce platfor
 * **Business Problem**: In e-commerce platforms, retaining existing users is usually more cost-effective than acquiring new users.Traditional descriptive analysis can identify inactive users after churn has already happened, but it is less effective for early intervention.This project aims to build a simple churn prediction workflow using recent user behavior data to identify users with high churn risk in advance.
 * **Churn Definition**: In this project, a user is labeled as churn-risk **(`is_churn = 1`)** if no **Carting (`cart`)** or **Purchasing (`buy`)** behavior occurs during the following 1-day observation period after the feature window.An 8-day activity window was used to generate behavioral features because shorter windows produced sparse user activity and unstable aggregation results during initial testing.
 * **Feature Engineering**:
-  * **recency_hours**:Measures how long it has been since the user's last interaction with the platform. Users with longer inactivity periods are more likely to churn.
-  * **pv_count_8d, fav_count_8d, cart_count_8d, buy_count_8d**: Measure user activity frequency during the 8-day observation window.
-  * **pv_to_buy_ratio**: Measures the conversion relationship between browsing and purchasing behavior. A high browsing volume with low purchase activity may indicate weaker purchase intention or higher conversion friction.
-During feature analysis, **cart_count_8d** showed stronger predictive power than simple page-view behavior, suggesting that purchase-intent actions are more useful for identifying potential churn users.
+  * **`recency_hours`**:Measures how long it has been since the user's last interaction with the platform. Users with longer inactivity periods are more likely to churn.
+  * **`pv_count_8d, fav_count_8d, cart_count_8d, buy_count_8d`**: Measure user activity frequency during the 8-day observation window.
+  * **`pv_to_buy_ratio`**: Measures the conversion relationship between browsing and purchasing behavior. A high browsing volume with low purchase activity may indicate weaker purchase intention or higher conversion friction.
+During feature analysis, **`cart_count_8d`** showed stronger predictive power than simple page-view behavior, suggesting that purchase-intent actions are more useful for identifying potential churn users.
 
 ---
 
@@ -21,17 +21,17 @@ During feature analysis, **cart_count_8d** showed stronger predictive power than
 
 Raw user behavior logs were processed using SQL to generate a structured feature table for churn prediction modeling.
 
-*A sliding-window approach was used to separate the feature generation period from the churn observation period:
+* A sliding-window approach was used to separate the feature generation period from the churn observation period:
 (1).The first 8 days were used to calculate user behavioral features.
 (2).The following 1-day window was used to determine whether the user showed potential churn behavior.
-*Common Table Expressions (CTEs) and conditional aggregation were used to construct user-level behavioral features from raw transaction logs.
-*A total of 654 active users were extracted, including 357 churn-risk users (**is_churn = 1**).
+* Common Table Expressions (CTEs) and conditional aggregation were used to construct user-level behavioral features from raw transaction logs.
+* A total of 654 active users were extracted, including 357 churn-risk users (**`is_churn = 1`**).
 
 **Main Feature Construction Logic**:
-**recency_hours**measures the time gap between the user's latest interaction and the end of the feature window.
-**pv_count_8d, fav_count_8d, cart_count_8d, and buy_count_8d**measure user activity frequency during the observation period.
-**is_churn**is labeled as 1 if the user has no **cart** or **buy** behavior during the following 1-day observation window.
-**pv_to_buy_ratio** was added to reflect the conversion relationship between browsing and purchasing behavior.
+**`recency_hours`**measures the time gap between the user's latest interaction and the end of the feature window.
+**`pv_count_8d, fav_count_8d, cart_count_8d, and buy_count_8d`** measure user activity frequency during the observation period.
+**`is_churn`**is labeled as 1 if the user has no **`cart`** or **`buy`** behavior during the following 1-day observation window.
+**`pv_to_buy_ratio`** was added to reflect the conversion relationship between browsing and purchasing behavior.
 
 During preprocessing, users with no meaningful activity records were filtered out to reduce noise in the training dataset.
 
@@ -100,12 +100,13 @@ A simple business impact estimation model was used to simulate the potential val
 
 $$Delta GMV = N_{target} \times Recall \times ConversionRate \times AOV - Cost_{coupons}$$
 
-Assuming 10,000 high-risk users are identified by the model:
+* Assuming 10,000 high-risk users are identified by the model:
 (1).Model recall: **94.4%**
 (2).Estimated reactivation conversion rate: **10%**
 (3).Average order value (AOV): **150 RMB**
-Under this simplified simulation, the retention strategy could potentially recover part of the lost revenue while maintaining reasonable coupon costs.
-The calculation is intended as a business estimation example rather than a real production revenue forecast.
+
+* Under this simplified simulation, the retention strategy could potentially recover part of the lost revenue while maintaining reasonable coupon costs.
+* The calculation is intended as a business estimation example rather than a real production revenue forecast.
 
 ---
 
