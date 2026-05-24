@@ -1,27 +1,36 @@
 
 # E-Commerce User Churn Prediction & Systematic Retention Pipeline
 
-An enterprise-grade Data Analytics & Growth Engineering project engineered to transition retrospective descriptive analysis into a forward-looking proactive user retention pipeline. This repository delivers an end-to-end analytical framework covering production-level **MySQL sliding-window feature engineering**, white-box **Random Forest churn prediction**, **A/B testing (t-test) analysis**, and an executive **Power BI Retention Dashboard Framework**.
+This project focuses on predicting potential user churn in an e-commerce platform using behavioral interaction data.The project covers the complete data analysis workflow, including **SQL-based feature engineering**, **churn prediction modeling**, **A/B testing analysis**, and **Power BI dashboard visualization**.The main objective is to identify users with high churn risk based on recent behavioral activity and support retention strategy optimization through data-driven analysis.
 
 ---
 
-## 📌 1. Business Decomposition & Metric Architecture
+## 📌 1. Business Problem & Feature Design
 
-* **Business Pain Point**: Acquiring new traffic (Customer Acquisition Cost - CAC) in highly competitive e-commerce environments is drastically more expensive than retaining existing cohorts. Standard retrospective descriptive analysis only identifies users after they have permanently defected. This project builds a **forward-looking early-warning system** to identify high-risk, high-value users prior to churn, allowing targeted marketing intervention.
-* **Operational Churn Definition**: Given the high-frequency nature of user-platform interactions, a consumer is defined as exhibiting **High-Risk Churn Propensity (`is_churn = 1`)** if they fail to execute deep, high-intent transactional or consideration actions—specifically **Carting (`cart`)** or **Purchasing (`buy`)**—within a designated 1-day observation window, following an active 8-day engagement window.
-* **Feature Engineering Taxonomy**:
-  * **Target Variable (Y)**: `is_churn` (1 = Churn Risk / Drop in Engagement, 0 = Healthy Retention).
-  * **Recency Feature (X1)**: `recency_hours` — The exact duration (in hours) elapsed between the user's final platform interaction and the cutoff boundary of the feature generation window. This serves as the primary velocity indicator of user disengagement.
-  * **Frequency Features (X2 - X5)**: `pv_count_8d`, `fav_count_8d`, `cart_count_8d`, `buy_count_8d` — Absolute aggregated behavior volumes over an 8-day rolling sliding window, measuring absolute affinity.
-  * **Derived Micro-Conversion Feature (X6)**: `pv_to_buy_ratio` — The systemic transition rate from broad impression viewing to deterministic acquisition, tracking user purchasing friction.
-  
+* **Business Problem**: In e-commerce platforms, retaining existing users is usually more cost-effective than acquiring new users.Traditional descriptive analysis can identify inactive users after churn has already happened, but it is less effective for early intervention.This project aims to build a simple churn prediction workflow using recent user behavior data to identify users with high churn risk in advance.
+* **Churn Definition**: In this project, a user is labeled as churn-risk **(`is_churn = 1`)** if no **Carting (`cart`)** or **Purchasing (`buy`)** behavior occurs during the following 1-day observation period after the feature window.An 8-day activity window was used to generate behavioral features because shorter windows produced sparse user activity and unstable aggregation results during initial testing.
+* **Feature Engineering**:
+  * **recency_hours**:Measures how long it has been since the user's last interaction with the platform. Users with longer inactivity periods are more likely to churn.
+  * **pv_count_8d, fav_count_8d, cart_count_8d, buy_count_8d**: Measure user activity frequency during the 8-day observation window.
+  * **pv_to_buy_ratio**: Measures the conversion relationship between browsing and purchasing behavior. A high browsing volume with low purchase activity may indicate weaker purchase intention or higher conversion friction.
+During feature analysis, **cart_count_8d** showed stronger predictive power than simple page-view behavior, suggesting that purchase-intent actions are more useful for identifying potential churn users.
+
 ---
----
 
-## 🛠️ 2. Production SQL ETL & Sliding-Window Engineering
+## 🛠️ 2. SQL Feature Engineering Pipeline
 
-* **Data Governance & Imbalance Mitigation**: Financial and transaction log data natively suffer from temporal overlap and extreme data imbalance if the observation window is improperly calibrated. An elegant SQL pipeline was designed to structure raw user streams into an analytical feature wide table using Common Table Expressions (CTEs) and UNIX timestamp boundaries. 
-* **Data Scale & Label Distribution**: The script successfully extracted **654** total active profiles, capturing a robustly balanced distribution of **357** high-risk churn instances, completely eliminating the hazard of zero-variance model convergence.
+Raw user behavior logs were processed using SQL to generate a structured feature table for churn prediction modeling.
+A sliding-window approach was used to separate the feature generation period from the churn observation period:
+(1).The first 8 days were used to calculate user behavioral features.
+(2).The following 1-day window was used to determine whether the user showed potential churn behavior.
+Common Table Expressions (CTEs) and conditional aggregation were used to construct user-level behavioral features from raw transaction logs.
+A total of 654 active users were extracted, including 357 churn-risk users (**is_churn = 1**).
+**Main Feature Construction Logic**:
+**recency_hours**measures the time gap between the user's latest interaction and the end of the feature window.
+**pv_count_8d, fav_count_8d, cart_count_8d, and buy_count_8d**measure user activity frequency during the observation period.
+**is_churn**is labeled as 1 if the user has no **cart** or **buy** behavior during the following 1-day observation window.
+**pv_to_buy_ratio** was added to reflect the conversion relationship between browsing and purchasing behavior.
+During preprocessing, users with no meaningful activity records were filtered out to reduce noise in the training dataset.
 
 ### 🗄️ Feature Extraction Pipeline (`user_churn_etl.sql`)
 ```sql
@@ -60,56 +69,61 @@ WHERE pv_count_8d > 0 OR cart_count_8d > 0;
 ````
 ---
 
-## 📊 3. White-Box Modeling & Asymmetric Cost Optimization
+## 📊 3. Churn Prediction Modeling
 
-The analytical framework implements a robust **Random Forest Classifier** optimized for business-cost utility rather than raw accuracy.
+A **Random Forest Classifier** was used to predict potential churn users based on behavioral features.Logistic Regression was initially tested as a baseline model because of its simplicity and interpretability. However, user behavioral patterns showed nonlinear relationships, especially between carting and purchasing actions, which limited the model performance.Random Forest was later selected because it achieved better recall performance while still providing interpretable feature importance results.
 
 * 📁 **Core Modeling Framework**: [`Churn_Prediction_Framework.ipynb`](Churn_Prediction_Framework.ipynb)
-* **Model Evaluation Metrics & Outcomes**:
-  * **Asymmetric Risk Strategy**: To align with business realities where a False Negative (leaking an executive active user) costs 10x more than a False Positive (distributing an unnecessary micro-voucher), the classification threshold was tuned down to **0.40**.
-  * **Empirical Results**: The system successfully achieved an outstanding **Recall rate of 94.4%** (68 out of 72 true risk vectors accurately detected), capturing critical platform assets before final detachment.
-* **Feature Attribution & Information Gain**:
-  * Behavioral analysis explicitly identifies `cart_count_8d` as the dominant predictor (Information Gain > 32%). This indicates that strong consideration signals (carting actions) combined with immediate drop-offs provide the most definitive churn signals, far outperforming passive viewing (`pv_count_8d`) or historical purchases (`buy_count_8d`).
+* **Model Optimization**:
+  * **Asymmetric Risk Strategy**: The classification threshold was adjusted from the default value of **0.50** to **0.40** in order to improve recall performance.
+  * **Empirical Results**: From a business perspective, missing potential churn users was considered more costly than sending unnecessary retention coupons.The final model achieved a recall score of **94.4%**, successfully identifying most high-risk churn users in the testing dataset.
+* **Feature Importance Analysis**:
+  * Feature importance analysis showed that cart_count_8d was one of the strongest predictors in the model.This suggests that cart-related behaviors carry stronger purchase intent signals compared with simple browsing behavior (pv_count_8d).Users who previously showed strong purchase intent but suddenly stopped interacting were more likely to become churn-risk users.
 
 ---
 
-## 🚀 4. Actionable Multi-Tier Retention Matrix & GMV Quantifiable Lift
+## 🚀 4. Retention Strategy Analysis
 
-The machine learning predictions directly feed into an automated, cross-functional marketing and product operation matrix:
+Based on the predicted churn probability and historical user activity, several retention strategies were designed for different user groups.
 
-### 💡 Segmented Strategy Lifecycle Matrix
-By plotting predicted Churn Probability ($P_{\text{churn}}$) against historical user monetization weight ($M_{\text{volume}}$), the platform triggers targeted webhook events:
-
-| Strategic Segment | Churn Risk Threshold | Historical Value Tier | Operational Playbook (Actionable Advice) |
+| User Segment | Churn Risk | Historical Value Tier | Suggested Retention Strategy |
 | :--- | :--- | :--- | :--- |
-| **High-Value / High-Risk** | $P_{\text{churn}} \ge 80\%$ | Top 20% GMV Contributors | **Immediate High-Priority Interception**: Trigger push notifications and SMS vectors delivering high-incentive, site-wide premium no-threshold vouchers to shock-activate reactivation. |
-| **Mid-Value / High-Risk** | $P_{\text{churn}} \ge 75\%$ | Middle 50% Core Cohort | **Cross-Category Reactivation**: Dynamically inject recommended item modules based on historical category affinity paired with category-specific coupons to stimulate conversion. |
-| **Low-Value / High-Risk** | $P_{\text{churn}} \ge 70\%$ | Bottom 30% Low Spenders | **Low-Cost Gamification Engagement**: Route users into low-cost loyalty programs, daily check-in mechanics, or push community content to recover attention without eroding margin. |
+| **High-Value / High-Risk Users** | High churn probability with strong historical purchasing behavior | Provide discount coupons or personalized notifications to encourage re-engagement |
+| **Medium-Value / High-Risk Users** | Moderate purchasing activity with increasing inactivity | Recommend related products and category-specific promotions |
+| **Low-Value / High-Risk Users** | Low activity and low historical spending | Use low-cost engagement strategies such as loyalty programs or daily check-in activities |
 
-### 📈 Quantifiable GMV Impact Simulation Model
-To justify the economic viability of the data science architecture, the performance is mapped to an algorithmic revenue growth function:
+### 📈 Business Impact Estimation
+A simple business impact estimation model was used to simulate the potential value of the retention strategy:
 
-$$\Delta\text{GMV} = N_{\text{target}} \times \text{Recall} \times \Delta\text{Conversion} \times \text{ALV} - \text{Cost}_{\text{vouchers}}$$
+$$Delta GMV = N_{target} \times Recall \times ConversionRate \times AOV - Cost_{coupons}$$
 
-* **Production Proof of Concept**: Assuming a cohort of $10,000$ high-risk accounts are processed, a model Recall of $94.4\%$ accurately isolates $9,440$ valid churn vectors.
-* **Strategy Execution**: Implementing the high-incentive tiered playbook achieves a modest $10\%$ reactivation conversion rate among targeted users ($944$ successfully retained customers).
-* **Net Revenue Contribution**: With an Average Order Value (AOV / ALV) of $150$ RMB, the architecture directly protects and generates **$141,600$ RMB in incremental gross revenue**.
-* **Net Economic Benefit**: Subtracting voucher redemption costs ($\approx 20,000$ RMB), the framework yields a **Net Economic Benefit of $121,600$ RMB, delivering an enterprise ROI of 6.08x**.
-  
+Assuming 10,000 high-risk users are identified by the model:
+(1).Model recall: **94.4%**
+(2).Estimated reactivation conversion rate: **10%**
+(3).Average order value (AOV): **150 RMB**
+Under this simplified simulation, the retention strategy could potentially recover part of the lost revenue while maintaining reasonable coupon costs.
+The calculation is intended as a business estimation example rather than a real production revenue forecast.
+
 ---
 
-## 🧪 5. Integrated Cohort Analysis & A/B Growth Experimentation
+## 🧪 5. Cohort Analysis & A/B Testing
 
-To evaluate product baseline health and statistically validate the revenue-generating potential of our machine-learning intervention, a rigorous validation pipeline was executed.
+To further evaluate whether retention interventions could improve user engagement, a simple A/B testing analysis was conducted.
+
+Users were divided into two groups:
+(1).Control Group: users who did not receive retention incentives
+(2).Treatment Group: users who received targeted voucher interventions
 
 * 📁 **Analytics & Testing Engine**: [`retention_ab_test_analyzer.ipynb`](retention_ab_test_analyzer.ipynb)
-* **Empirical Cohort Performance**:
-  * **Control Group A (No Voucher)**: Baseline 7-Day user retention settled at **21.50%**.
-  * **Treatment Group B (Segmented Voucher Intervention)**: Post-intervention 7-Day user retention surged to **28.80%**, representing a substantial **$+7.3\%$** lift in user portfolio health.
-* **Statistical Rigor**: A Two-Sample Independent T-Test was executed across the experimentation matrices to confirm that the observed lift was not driven by random sampling variance:
+* **Experimental Results**:
+  Control Group 7-day retention rate: 21.5%
+  Treatment Group 7-day retention rate: 28.8%
+  The treatment group showed a 7.3% improvement in retention performance compared with the control group.
+  
+* **Statistical Testing**:An independent two-sample t-test was performed to determine whether the observed retention improvement was statistically significant.
   * **T-Statistic**: `-3.7737`
   * **P-Value**: `1.6553e-04` ($\alpha < 0.01$)
-  * **Conclusion**: Successfully rejected the Null Hypothesis ($H_0$), verifying that the targeted growth intervention mechanisms provide a statistically significant, scalable lift to platform user retention velocity.
+  * **Conclusion**: Since the p-value was smaller than 0.01, the null hypothesis was rejected.This suggests that the retention intervention strategy may have a positive impact on short-term user retention performance.
 
 ---
 
