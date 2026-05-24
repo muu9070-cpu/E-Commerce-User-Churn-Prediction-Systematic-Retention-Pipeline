@@ -20,16 +20,19 @@ During feature analysis, **cart_count_8d** showed stronger predictive power than
 ## 🛠️ 2. SQL Feature Engineering Pipeline
 
 Raw user behavior logs were processed using SQL to generate a structured feature table for churn prediction modeling.
-A sliding-window approach was used to separate the feature generation period from the churn observation period:
+
+*A sliding-window approach was used to separate the feature generation period from the churn observation period:
 (1).The first 8 days were used to calculate user behavioral features.
 (2).The following 1-day window was used to determine whether the user showed potential churn behavior.
-Common Table Expressions (CTEs) and conditional aggregation were used to construct user-level behavioral features from raw transaction logs.
-A total of 654 active users were extracted, including 357 churn-risk users (**is_churn = 1**).
+*Common Table Expressions (CTEs) and conditional aggregation were used to construct user-level behavioral features from raw transaction logs.
+*A total of 654 active users were extracted, including 357 churn-risk users (**is_churn = 1**).
+
 **Main Feature Construction Logic**:
 **recency_hours**measures the time gap between the user's latest interaction and the end of the feature window.
 **pv_count_8d, fav_count_8d, cart_count_8d, and buy_count_8d**measure user activity frequency during the observation period.
 **is_churn**is labeled as 1 if the user has no **cart** or **buy** behavior during the following 1-day observation window.
 **pv_to_buy_ratio** was added to reflect the conversion relationship between browsing and purchasing behavior.
+
 During preprocessing, users with no meaningful activity records were filtered out to reduce noise in the training dataset.
 
 ### 🗄️ Feature Extraction Pipeline (`user_churn_etl.sql`)
@@ -86,8 +89,8 @@ A **Random Forest Classifier** was used to predict potential churn users based o
 
 Based on the predicted churn probability and historical user activity, several retention strategies were designed for different user groups.
 
-| User Segment | Churn Risk | Historical Value Tier | Suggested Retention Strategy |
-| :--- | :--- | :--- | :--- |
+| User Segment | Churn Risk | Suggested Retention Strategy |
+| :--- | :--- | :--- | 
 | **High-Value / High-Risk Users** | High churn probability with strong historical purchasing behavior | Provide discount coupons or personalized notifications to encourage re-engagement |
 | **Medium-Value / High-Risk Users** | Moderate purchasing activity with increasing inactivity | Recommend related products and category-specific promotions |
 | **Low-Value / High-Risk Users** | Low activity and low historical spending | Use low-cost engagement strategies such as loyalty programs or daily check-in activities |
