@@ -120,9 +120,9 @@ Users were divided into two groups:
 
 * 📁 **Analytics & Testing Engine**: [`retention_ab_test_analyzer.ipynb`](retention_ab_test_analyzer.ipynb)
 * **Experimental Results**:
-  Control Group 7-day retention rate: 21.5%
-  Treatment Group 7-day retention rate: 28.8%
-  The treatment group showed a 7.3% improvement in retention performance compared with the control group.
+  * Control Group 7-day retention rate: **21.5%**
+  * Treatment Group 7-day retention rate: **28.8%**
+  * The treatment group showed a **7.3%** improvement in retention performance compared with the control group.
   
 * **Statistical Testing**:An independent two-sample t-test was performed to determine whether the observed retention improvement was statistically significant.
   * **T-Statistic**: `-3.7737`
