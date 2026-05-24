@@ -78,10 +78,10 @@ A **Random Forest Classifier** was used to predict potential churn users based o
 
 * 📁 **Core Modeling Framework**: [`Churn_Prediction_Framework.ipynb`](Churn_Prediction_Framework.ipynb)
 * **Model Optimization**:
-  * **Asymmetric Risk Strategy**: The classification threshold was adjusted from the default value of **0.50** to **0.40** in order to improve recall performance.
+  * **Threshold Optimization**: The classification threshold was adjusted from the default value of **0.50** to **0.40** in order to improve recall performance.
   * **Empirical Results**: From a business perspective, missing potential churn users was considered more costly than sending unnecessary retention coupons.The final model achieved a recall score of **94.4%**, successfully identifying most high-risk churn users in the testing dataset.
 * **Feature Importance Analysis**:
-  * Feature importance analysis showed that cart_count_8d was one of the strongest predictors in the model.This suggests that cart-related behaviors carry stronger purchase intent signals compared with simple browsing behavior (pv_count_8d).Users who previously showed strong purchase intent but suddenly stopped interacting were more likely to become churn-risk users.
+  * Feature importance analysis showed that cart_count_8d was one of the strongest predictors in the model.This suggests that cart-related behaviors carry stronger purchase intent signals compared with simple browsing behavior (`pv_count_8d`).Users who previously showed strong purchase intent but suddenly stopped interacting were more likely to become churn-risk users.
 
 ---
 
@@ -174,10 +174,10 @@ The repository delivers both interactive enterprise `.pbix` source files and emb
 ## 📂 7. Repository Layout
 
 ```text
-├── README.md                           # Master Project Documentation & Business Spec
+├── README.md                           # Project documentation
 ├── user_churn_etl.sql                  # Production SQL Feature Engineering Pipeline
 ├── Churn_Prediction_Framework.ipynb    # Random Forest Classifier Training & Evaluation
-├── retention_ab_test_analyzer.ipynb    # Integrated Cohort Matrix & Automated T-Test Pipeline
+├── retention_ab_test_analyzer.ipynb    # A/B testing analysis
 ├── Result_Data/                        # Simulated Experiment Output Log Aggregations
 ├── dashboards/                         # Power BI Source Artifacts (.pbix files)
 │   ├── Executive_Overview.pbix
