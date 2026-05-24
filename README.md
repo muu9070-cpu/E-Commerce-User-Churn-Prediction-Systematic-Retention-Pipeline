@@ -29,9 +29,9 @@ Raw user behavior logs were processed using SQL to generate a structured feature
 * A total of 654 active users were extracted, including 357 churn-risk users (**`is_churn = 1`**).
 
 **Main Feature Construction Logic**:
-* **`recency_hours`**measures the time gap between the user's latest interaction and the end of the feature window.
+* **`recency_hours`** measures the time gap between the user's latest interaction and the end of the feature window.
 * **`pv_count_8d, fav_count_8d, cart_count_8d, and buy_count_8d`** measure user activity frequency during the observation period.
-* **`is_churn`**is labeled as 1 if the user has no **`cart`** or **`buy`** behavior during the following 1-day observation window.
+* **`is_churn`** is labeled as 1 if the user has no **`cart`** or **`buy`** behavior during the following 1-day observation window.
 * **`pv_to_buy_ratio`** was added to reflect the conversion relationship between browsing and purchasing behavior.
 
 During preprocessing, users with no meaningful activity records were filtered out to reduce noise in the training dataset.
