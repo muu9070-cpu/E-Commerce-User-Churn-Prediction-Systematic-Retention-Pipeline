@@ -141,28 +141,28 @@ The repository delivers both interactive enterprise `.pbix` source files and emb
 
 <div align="center">
   <img src="./assets/Executive_Overview.png" width="95%" alt="Executive Overview" style="border: 1px solid #cbd5e1; border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-bottom: 15px;" />
-  <p><i>Figure 1: Executive Overview - Centralized KPI monitoring for macroscopic transactional velocity and conversion-funnel leakage points.</i></p>
+  <p><i>Figure 1:Executive dashboard showing overall user count, churn rate, average order value, and churn-related behavioral trends.</i></p>
 </div>
 
 <br>
 
 <div align="center">
   <img src="./assets/Retention_Heatmap.png" width="95%" alt="Retention Heatmap Matrix" style="border: 1px solid #cbd5e1; border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-bottom: 15px;" />
-  <p><i>Figure 2: User Cohort Retention Heatmap - Standard matrix locking Week 0 baseline at 100%, with conditional formatting isolating portfolio decay.</i></p>
+  <p><i>Figure 2: Retention heatmap comparing retention performance across different user risk groups over time.</i></p>
 </div>
 
 <br>
 
 <div align="center">
   <img src="./assets/User_Segmentation.png" width="95%" alt="User Risk Alert View" style="border: 1px solid #cbd5e1; border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-bottom: 15px;" />
-  <p><i>Figure 3: User Segmentation & Risk Alert - Precision risk stratification classifying users based on ML probability scores.</i></p>
+  <p><i>Figure 3: User segmentation dashboard showing churn-risk group distribution based on model prediction results.</i></p>
 </div>
 
 <br>
 
 <div align="center">
   <img src="./assets/Funnel_Optimization.png" width="95%" alt="PV-Cart-Buy Convergent Funnel" style="border: 1px solid #cbd5e1; border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-bottom: 15px;" />
-  <p><i>Figure 4: Conversion Funnel Optimization - Classic 3-stage monotonically decreasing funnel validating the targeted high-risk voucher intervention strategy.</i></p>
+  <p><i>Figure 4: Conversion funnel analysis showing the transition from page view to cart and purchase behavior.</i></p>
 </div>
 
 ---
