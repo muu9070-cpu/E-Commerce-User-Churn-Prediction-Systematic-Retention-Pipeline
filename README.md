@@ -13,6 +13,7 @@ This project focuses on predicting potential user churn in an e-commerce platfor
   * **`recency_hours`**:Measures how long it has been since the user's last interaction with the platform. Users with longer inactivity periods are more likely to churn.
   * **`pv_count_8d, fav_count_8d, cart_count_8d, buy_count_8d`**: Measure user activity frequency during the 8-day observation window.
   * **`pv_to_buy_ratio`**: Measures the conversion relationship between browsing and purchasing behavior. A high browsing volume with low purchase activity may indicate weaker purchase intention or higher conversion friction.
+
 During feature analysis, **`cart_count_8d`** showed stronger predictive power than simple page-view behavior, suggesting that purchase-intent actions are more useful for identifying potential churn users.
 
 ---
@@ -28,10 +29,10 @@ Raw user behavior logs were processed using SQL to generate a structured feature
 * A total of 654 active users were extracted, including 357 churn-risk users (**`is_churn = 1`**).
 
 **Main Feature Construction Logic**:
-**`recency_hours`**measures the time gap between the user's latest interaction and the end of the feature window.
-**`pv_count_8d, fav_count_8d, cart_count_8d, and buy_count_8d`** measure user activity frequency during the observation period.
-**`is_churn`**is labeled as 1 if the user has no **`cart`** or **`buy`** behavior during the following 1-day observation window.
-**`pv_to_buy_ratio`** was added to reflect the conversion relationship between browsing and purchasing behavior.
+* **`recency_hours`**measures the time gap between the user's latest interaction and the end of the feature window.
+* **`pv_count_8d, fav_count_8d, cart_count_8d, and buy_count_8d`** measure user activity frequency during the observation period.
+* **`is_churn`**is labeled as 1 if the user has no **`cart`** or **`buy`** behavior during the following 1-day observation window.
+* **`pv_to_buy_ratio`** was added to reflect the conversion relationship between browsing and purchasing behavior.
 
 During preprocessing, users with no meaningful activity records were filtered out to reduce noise in the training dataset.
 
