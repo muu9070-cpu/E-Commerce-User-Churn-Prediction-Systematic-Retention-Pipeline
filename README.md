@@ -1,4 +1,4 @@
-# E-Commerce User Churn Prediction & Systematic Retention Pipeline
+# User Churn Prediction & Systematic Retention Pipeline
 
 This project focuses on predicting potential user churn in an e-commerce platform using behavioral interaction data.The project covers the complete data analysis workflow, including **SQL-based feature engineering**, **churn prediction modeling**, **A/B testing analysis**, and **Power BI dashboard visualization**.The main objective is to identify users with high churn risk based on recent behavioral activity and support retention strategy optimization through data-driven analysis.
 
